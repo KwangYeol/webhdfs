@@ -159,6 +159,18 @@ describe('WebHDFS', function () {
     });
   });
 
+  it('should get content summary', function (done) {
+    hdfs.stat(path + '/bigfile', function (err, stats) {
+      demand(err).be.null();
+      demand(stats).be.object();
+
+      demand(stats.type).to.eql('FILE');
+      demand(stats.owner).to.eql(process.env.USER);
+
+      done();
+    });
+  });
+
   it('should create symbolic link', function (done) {
     hdfs.symlink(path+ '/bigfile', path + '/biggerfile', function (err) {
       // Pass if server doesn't support symlinks
